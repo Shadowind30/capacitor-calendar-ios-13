@@ -44,7 +44,7 @@ public class CapacitorCalendar: CAPPlugin {
         
         let eventStartDate = Date(timeIntervalSince1970: startDate / 1000);
         
-        store.requestAccess(to: .event) { (accessGranted: Bool, error: Error?) in
+        store.requestWriteOnlyAccess(to: .event) { (accessGranted: Bool, error: Error?) in
             if accessGranted && error == nil {
                 var calendar = self.store.defaultCalendarForNewEvents
                 if let identifier = call.getString("calendarId") {
@@ -127,7 +127,7 @@ public class CapacitorCalendar: CAPPlugin {
 
         let eventStartDate = Date(timeIntervalSince1970: startDate / 1000);
          
-        store.requestAccess(to: .event) { (accessGranted: Bool, error: Error?) in
+        store.requestWriteOnlyAccess(to: .event) { (accessGranted: Bool, error: Error?) in
             if accessGranted && error == nil {
                 
                 guard let event = self.store.event(withIdentifier: id) else {
@@ -185,7 +185,7 @@ public class CapacitorCalendar: CAPPlugin {
         let eventStartDate = Date(timeIntervalSince1970: startDate / 1000)
         let eventEndDate = Date(timeIntervalSince1970: endDate / 1000)
         
-        store.requestAccess(to: .event) { (accessGranted: Bool, error: Error?) in
+        store.requestWriteOnlyAccess(to: .event) { (accessGranted: Bool, error: Error?) in
             if accessGranted && error == nil {
                 let calendars = self.store.calendars(for: EKEntityType.event)
                 let predicate = self.store.predicateForEvents(withStart: eventStartDate, end: eventEndDate, calendars: calendars)
@@ -261,7 +261,7 @@ public class CapacitorCalendar: CAPPlugin {
             return
         }
         
-        store.requestAccess(to: .event) { (accessGranted: Bool, error: Error?) in
+        store.requestWriteOnlyAccess(to: .event) { (accessGranted: Bool, error: Error?) in
             if accessGranted && error == nil {
                 guard let event = self.store.event(withIdentifier: id) else {
                     let msg = "Event \(id) has not been found"
@@ -297,7 +297,7 @@ public class CapacitorCalendar: CAPPlugin {
     }
     
     @objc func getAvailableCalendars(_ call: CAPPluginCall) {
-        store.requestAccess(to: .event) { (accessGranted: Bool, error: Error?) in
+        store.requestWriteOnlyAccess(to: .event) { (accessGranted: Bool, error: Error?) in
             if accessGranted && error == nil {
                 let defaultCalendar = self.store.defaultCalendarForNewEvents
                 
